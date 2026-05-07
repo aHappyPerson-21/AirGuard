@@ -2,302 +2,287 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Air Quality Survey</title>
+<title>Smart Indoor Air Quality Analyzer</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #dff6ff, #f6fbff);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-        }
+    body {
+        background: linear-gradient(135deg, #e0f2ff, #f7fbff);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 850px;
-            background: white;
-            border-radius: 25px;
-            padding: 50px;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
-        }
+    .container {
+        width: 100%;
+        max-width: 900px;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+    }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-            color: #0f172a;
-        }
+    h1 {
+        text-align: center;
+        margin-bottom: 10px;
+        color: #0f172a;
+    }
 
-        .subtitle {
-            text-align: center;
-            color: #64748b;
-            margin-bottom: 40px;
-        }
+    .subtitle {
+        text-align: center;
+        color: #64748b;
+        margin-bottom: 30px;
+    }
 
-        .question {
-            margin-bottom: 28px;
-        }
+    .question {
+        margin-bottom: 20px;
+    }
 
-        .question label {
-            display: block;
-            margin-bottom: 12px;
-            font-weight: 600;
-            color: #0f172a;
-        }
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
 
-        input,
-        select {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            border: 2px solid #dbeafe;
-            font-size: 16px;
-            outline: none;
-        }
+    input, select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #cbd5e1;
+        font-size: 15px;
+        outline: none;
+    }
 
-        input:focus,
-        select:focus {
-            border-color: #00a6ff;
-        }
+    input:focus, select:focus {
+        border-color: #00a6ff;
+    }
 
-        button {
-            width: 100%;
-            padding: 18px;
-            background: #00a6ff;
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 20px;
-        }
+    button {
+        width: 100%;
+        padding: 15px;
+        margin-top: 15px;
+        background: #00a6ff;
+        border: none;
+        color: white;
+        font-size: 17px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+    }
 
-        button:hover {
-            background: #0087d1;
-        }
+    button:hover {
+        background: #0086d1;
+    }
 
-        .result {
-            margin-top: 35px;
-            padding: 30px;
-            border-radius: 20px;
-            display: none;
-        }
+    .result {
+        margin-top: 25px;
+        padding: 25px;
+        border-radius: 15px;
+        display: none;
+    }
 
-        .good {
-            background: #dcfce7;
-            color: #166534;
-        }
+    .good { background: #dcfce7; color: #166534; }
+    .moderate { background: #fef9c3; color: #854d0e; }
+    .bad { background: #fee2e2; color: #991b1b; }
 
-        .moderate {
-            background: #fef9c3;
-            color: #854d0e;
-        }
+    .tips {
+        margin-top: 15px;
+    }
 
-        .bad {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .result h2 {
-            margin-bottom: 15px;
-        }
-
-        .tips {
-            margin-top: 15px;
-            line-height: 1.9;
-        }
-    </style>
+    ul {
+        margin-top: 10px;
+        padding-left: 20px;
+        line-height: 1.7;
+    }
+</style>
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h1>Indoor Air Quality Scanner</h1>
+<h1>Smart Indoor Air Quality Analyzer</h1>
+<p class="subtitle">Science-based estimation model (ventilation, exposure, pollutants)</p>
 
-        <p class="subtitle">
-            Answer these questions to estimate your indoor air quality.
-        </p>
+<div class="question">
+<label>People in room</label>
+<input type="number" id="people">
+</div>
 
-        <div class="question">
-            <label>1. How many people are inside the room?</label>
-            <input type="number" id="people">
-        </div>
+<div class="question">
+<label>Window ventilation</label>
+<select id="windows">
+<option value="3">Often (good airflow)</option>
+<option value="2">Sometimes</option>
+<option value="1">Rarely</option>
+<option value="0">Never</option>
+</select>
+</div>
 
-        <div class="question">
-            <label>2. How often are windows opened?</label>
-            <select id="windows">
-                <option value="0">Often</option>
-                <option value="1">Sometimes</option>
-                <option value="2">Rarely</option>
-            </select>
-        </div>
+<div class="question">
+<label>Smoking indoors</label>
+<select id="smoke">
+<option value="0">No</option>
+<option value="4">Yes</option>
+</select>
+</div>
 
-        <div class="question">
-            <label>3. Is there smoking indoors?</label>
-            <select id="smoke">
-                <option value="0">No</option>
-                <option value="3">Yes</option>
-            </select>
-        </div>
+<div class="question">
+<label>Dust level</label>
+<select id="dust">
+<option value="0">Low</option>
+<option value="2">Medium</option>
+<option value="4">High</option>
+</select>
+</div>
 
-        <div class="question">
-            <label>4. Is there visible dust or dirt?</label>
-            <select id="dust">
-                <option value="0">No</option>
-                <option value="2">A little</option>
-                <option value="3">A lot</option>
-            </select>
-        </div>
+<div class="question">
+<label>Air purifier</label>
+<select id="purifier">
+<option value="-3">Yes (active filtration)</option>
+<option value="0">No</option>
+</select>
+</div>
 
-        <div class="question">
-            <label>5. Are air purifiers or filters used?</label>
-            <select id="purifier">
-                <option value="0">Yes</option>
-                <option value="2">No</option>
-            </select>
-        </div>
+<div class="question">
+<label>Mold / humidity issue</label>
+<select id="mold">
+<option value="0">No</option>
+<option value="4">Yes</option>
+</select>
+</div>
 
-        <div class="question">
-            <label>6. Is there mold or humidity?</label>
-            <select id="mold">
-                <option value="0">No</option>
-                <option value="3">Yes</option>
-            </select>
-        </div>
+<div class="question">
+<label>Hours room is occupied daily</label>
+<input type="number" id="hours">
+</div>
 
-        <div class="question">
-            <label>7. How many hours per day is the room occupied?</label>
-            <input type="number" id="hours">
-        </div>
+<button onclick="analyzeAir()">Analyze Air Quality</button>
 
-        <button onclick="analyzeAir()">Analyze Air Quality</button>
+<div id="result" class="result">
+<h2 id="title"></h2>
+<p id="text"></p>
 
-        <div id="result" class="result">
-            <h2 id="resultTitle"></h2>
-            <p id="resultText"></p>
+<div class="tips">
+<strong>Improvement actions:</strong>
+<ul id="tips"></ul>
+</div>
+</div>
 
-            <div class="tips">
-                <strong>Suggestions:</strong>
-                <ul id="tipsList"></ul>
-            </div>
-        </div>
+</div>
 
-    </div>
+<script>
 
-    <script>
+function analyzeAir() {
 
-        function analyzeAir() {
+    const people = +document.getElementById("people").value || 0;
+    const windows = +document.getElementById("windows").value;
+    const smoke = +document.getElementById("smoke").value;
+    const dust = +document.getElementById("dust").value;
+    const purifier = +document.getElementById("purifier").value;
+    const mold = +document.getElementById("mold").value;
+    const hours = +document.getElementById("hours").value || 0;
 
-            let score = 0;
+    // -----------------------------
+    // SCIENCE-INSPIRED MODEL
+    // -----------------------------
 
-            const people = parseInt(document.getElementById("people").value) || 0;
-            const windows = parseInt(document.getElementById("windows").value);
-            const smoke = parseInt(document.getElementById("smoke").value);
-            const dust = parseInt(document.getElementById("dust").value);
-            const purifier = parseInt(document.getElementById("purifier").value);
-            const mold = parseInt(document.getElementById("mold").value);
-            const hours = parseInt(document.getElementById("hours").value) || 0;
+    let score = 0;
 
-            if (people > 5) {
-                score += 2;
-            }
+    // CO₂ accumulation risk (occupancy + time)
+    const occupancyRisk = (people * 0.6) + (hours * 0.2);
+    score += occupancyRisk;
 
-            if (hours > 10) {
-                score += 2;
-            }
+    // Ventilation (major factor)
+    score += (3 - windows) * 3;
 
-            score += windows;
-            score += smoke;
-            score += dust;
-            score += purifier;
-            score += mold;
+    // Pollution sources
+    score += smoke * 5;
+    score += dust * 2.5;
+    score += mold * 4;
 
-            const result = document.getElementById("result");
-            const resultTitle = document.getElementById("resultTitle");
-            const resultText = document.getElementById("resultText");
-            const tipsList = document.getElementById("tipsList");
+    // Air cleaning effect
+    score += purifier;
 
-            tipsList.innerHTML = "";
+    // Clamp score
+    score = Math.max(0, score);
 
-            result.style.display = "block";
+    // -----------------------------
+    // RESULT CLASSIFICATION
+    // -----------------------------
 
-            if (score <= 4) {
+    const result = document.getElementById("result");
+    const title = document.getElementById("title");
+    const text = document.getElementById("text");
+    const tips = document.getElementById("tips");
 
-                result.className = "result good";
+    tips.innerHTML = "";
+    result.style.display = "block";
 
-                resultTitle.innerHTML = "✅ Good Air Quality";
+    function addTip(t) {
+        const li = document.createElement("li");
+        li.innerText = t;
+        tips.appendChild(li);
+    }
 
-                resultText.innerHTML =
-                    "Your indoor environment appears healthy with good ventilation and lower pollution levels.";
+    // CO₂-style interpretation thresholds
+    if (score <= 6) {
 
-                addTip("Continue opening windows regularly.");
-                addTip("Clean dust weekly.");
-                addTip("Maintain proper ventilation.");
+        result.className = "result good";
+        title.innerText = "🟢 Good Indoor Air Quality";
 
-            }
+        text.innerText =
+        "Low pollutant load and good ventilation patterns. Conditions are generally healthy.";
 
-            else if (score <= 9) {
+        addTip("Keep natural ventilation consistent.");
+        addTip("Maintain regular cleaning routines.");
+        addTip("Avoid unnecessary indoor pollution sources.");
 
-                result.className = "result moderate";
+    } 
+    else if (score <= 14) {
 
-                resultTitle.innerHTML = "⚠ Moderate Air Quality";
+        result.className = "result moderate";
+        title.innerText = "🟡 Moderate Air Quality";
 
-                resultText.innerHTML =
-                    "Your indoor air quality may need improvement in ventilation or cleanliness.";
+        text.innerText =
+        "Some accumulation of pollutants or limited ventilation detected.";
 
-                addTip("Open windows more frequently.");
-                addTip("Reduce overcrowding indoors.");
-                addTip("Use an air purifier if possible.");
+        addTip("Increase window ventilation frequency.");
+        addTip("Reduce occupancy time in closed rooms.");
+        addTip("Consider adding an air purifier.");
+        addTip("Control humidity to prevent mold growth.");
 
-            }
+    } 
+    else {
 
-            else {
+        result.className = "result bad";
+        title.innerText = "🔴 Poor Indoor Air Quality";
 
-                result.className = "result bad";
+        text.innerText =
+        "High pollutant risk detected. Conditions may impact health and comfort.";
 
-                resultTitle.innerHTML = "❌ Poor Air Quality";
+        addTip("Immediately improve ventilation (open windows).");
+        addTip("Remove or stop smoking indoors.");
+        addTip("Deep clean dust and mold sources.");
+        addTip("Use HEPA filtration if available.");
+        addTip("Reduce room overcrowding.");
+    }
+}
 
-                resultText.innerHTML =
-                    "Your indoor air quality may negatively affect health and comfort.";
-
-                addTip("Increase ventilation immediately.");
-                addTip("Remove smoke sources.");
-                addTip("Clean dust and mold.");
-                addTip("Use air purifiers or filters.");
-                addTip("Reduce humidity levels.");
-
-            }
-
-        }
-
-        function addTip(text) {
-
-            const li = document.createElement("li");
-            li.innerText = text;
-            document.getElementById("tipsList").appendChild(li);
-
-        }
-
-    </script>
+</script>
 
 </body>
-
 </html>
