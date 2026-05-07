@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Air Quality Survey</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #dff6ff, #f6fbff);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: white;
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 40px;
+        }
+
+        .question {
+            margin-bottom: 28px;
+        }
+
+        .question label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #dbeafe;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #00a6ff;
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            background: #00a6ff;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: #0087d1;
+        }
+
+        .result {
+            margin-top: 35px;
+            padding: 30px;
+            border-radius: 20px;
+            display: none;
+        }
+
+        .good {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .moderate {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+
+        .bad {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .result h2 {
+            margin-bottom: 15px;
+        }
+
+        .tips {
+            margin-top: 15px;
+            line-height: 1.9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Indoor Air Quality Scanner</h1>
+
+        <p class="subtitle">
+            Answer these questions to estimate your indoor air quality.
+        </p>
+
+        <div class="question">
+            <label>1. How many people are inside the room?</label>
+            <input type="number" id="people">
+        </div>
+
+        <div class="question">
+            <label>2. How often are windows opened?</label>
+            <select id="windows">
+                <option value="0">Often</option>
+                <option value="1">Sometimes</option>
+                <option value="2">Rarely</option>
+            </select>
+        </div>
+
+        <div class="question">
+            <label>3. Is there smoking indoors?</label>
+            <select id="smoke">
+                <option value="0">No</option>
+                <option value="3">Yes</option>
+            </select>
+        </div>
+
+        <div class="question">
+            <label>4. Is there visible dust or dirt?</label>
+            <select id="dust">
+                <option value="0">No</option>
+                <option value="2">A little</option>
+                <option value="3">A lot</option>
+            </select>
+        </div>
+
+        <div class="question">
+            <label>5. Are air purifiers or filters used?</label>
+            <select id="purifier">
+                <option value="0">Yes</option>
+                <option value="2">No</option>
+            </select>
+        </div>
+
+        <div class="question">
+            <label>6. Is there mold or humidity?</label>
+            <select id="mold">
+                <option value="0">No</option>
+                <option value="3">Yes</option>
+            </select>
+        </div>
+
+        <div class="question">
+            <label>7. How many hours per day is the room occupied?</label>
+            <input type="number" id="hours">
+        </div>
+
+        <button onclick="analyzeAir()">Analyze Air Quality</button>
+
+        <div id="result" class="result">
+            <h2 id="resultTitle"></h2>
+            <p id="resultText"></p>
+
+            <div class="tips">
+                <strong>Suggestions:</strong>
+                <ul id="tipsList"></ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+        function analyzeAir() {
+
+            let score = 0;
+
+            const people = parseInt(document.getElementById("people").value) || 0;
+            const windows = parseInt(document.getElementById("windows").value);
+            const smoke = parseInt(document.getElementById("smoke").value);
+            const dust = parseInt(document.getElementById("dust").value);
+            const purifier = parseInt(document.getElementById("purifier").value);
+            const mold = parseInt(document.getElementById("mold").value);
+            const hours = parseInt(document.getElementById("hours").value) || 0;
+
+            if (people > 5) {
+                score += 2;
+            }
+
+            if (hours > 10) {
+                score += 2;
+            }
+
+            score += windows;
+            score += smoke;
+            score += dust;
+            score += purifier;
+            score += mold;
+
+            const result = document.getElementById("result");
+            const resultTitle = document.getElementById("resultTitle");
+            const resultText = document.getElementById("resultText");
+            const tipsList = document.getElementById("tipsList");
+
+            tipsList.innerHTML = "";
+
+            result.style.display = "block";
+
+            if (score <= 4) {
+
+                result.className = "result good";
+
+                resultTitle.innerHTML = "✅ Good Air Quality";
+
+                resultText.innerHTML =
+                    "Your indoor environment appears healthy with good ventilation and lower pollution levels.";
+
+                addTip("Continue opening windows regularly.");
+                addTip("Clean dust weekly.");
+                addTip("Maintain proper ventilation.");
+
+            }
+
+            else if (score <= 9) {
+
+                result.className = "result moderate";
+
+                resultTitle.innerHTML = "⚠ Moderate Air Quality";
+
+                resultText.innerHTML =
+                    "Your indoor air quality may need improvement in ventilation or cleanliness.";
+
+                addTip("Open windows more frequently.");
+                addTip("Reduce overcrowding indoors.");
+                addTip("Use an air purifier if possible.");
+
+            }
+
+            else {
+
+                result.className = "result bad";
+
+                resultTitle.innerHTML = "❌ Poor Air Quality";
+
+                resultText.innerHTML =
+                    "Your indoor air quality may negatively affect health and comfort.";
+
+                addTip("Increase ventilation immediately.");
+                addTip("Remove smoke sources.");
+                addTip("Clean dust and mold.");
+                addTip("Use air purifiers or filters.");
+                addTip("Reduce humidity levels.");
+
+            }
+
+        }
+
+        function addTip(text) {
+
+            const li = document.createElement("li");
+            li.innerText = text;
+            document.getElementById("tipsList").appendChild(li);
+
+        }
+
+    </script>
+
+</body>
+
+</html>

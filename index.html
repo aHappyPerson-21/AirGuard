@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Indoor Air Quality | PYP Exhibition</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f5f9fc;
+            color: #1f2937;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 70px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .logo span {
+            color: #00a6ff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00a6ff;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 80px 80px;
+            background:
+                linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.35)),
+                url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-text {
+            max-width: 850px;
+        }
+
+        .hero-text h1 {
+            font-size: 60px;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #e2e8f0;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .primary {
+            background: #00a6ff;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #0086cf;
+            transform: translateY(-3px);
+        }
+
+        .secondary {
+            background: white;
+            color: #111827;
+        }
+
+        .secondary:hover {
+            transform: translateY(-3px);
+        }
+
+        /* SECTIONS */
+
+        section {
+            padding: 90px 80px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-title h2 {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #0f172a;
+        }
+
+        .section-title p {
+            color: #64748b;
+            max-width: 760px;
+            margin: auto;
+            line-height: 1.8;
+        }
+
+        /* CARDS */
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 32px;
+            border-radius: 20px;
+            transition: 0.4s;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            color: #0f172a;
+        }
+
+        .card p {
+            line-height: 1.8;
+            color: #475569;
+        }
+
+        /* RESEARCH */
+
+        .research {
+            background: #eaf6ff;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 45px;
+            align-items: center;
+        }
+
+        .research-grid img {
+            width: 100%;
+            border-radius: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .research-text h3 {
+            font-size: 34px;
+            margin-bottom: 20px;
+        }
+
+        .research-text p {
+            line-height: 1.9;
+            margin-bottom: 18px;
+            color: #334155;
+        }
+
+        .research-list {
+            margin-top: 15px;
+            padding-left: 18px;
+        }
+
+        .research-list li {
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+
+        /* FACTS */
+
+        .facts {
+            background: #0f172a;
+            color: white;
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .fact-box {
+            text-align: center;
+            background: #1e293b;
+            padding: 35px;
+            border-radius: 20px;
+        }
+
+        .fact-box h1 {
+            font-size: 50px;
+            color: #00a6ff;
+            margin-bottom: 10px;
+        }
+
+        /* GALLERY */
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            border-radius: 18px;
+            height: 240px;
+            object-fit: cover;
+            transition: 0.4s;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.03);
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #0f172a;
+            color: white;
+            padding: 70px 80px;
+            text-align: center;
+        }
+
+        footer h2 {
+            margin-bottom: 20px;
+            font-size: 38px;
+        }
+
+        footer p {
+            max-width: 760px;
+            margin: auto;
+            line-height: 1.9;
+            color: #cbd5e1;
+        }
+
+        .scan-button {
+            margin-top: 35px;
+            padding: 18px 38px;
+            font-size: 19px;
+            border: none;
+            border-radius: 15px;
+            background: #00a6ff;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        .scan-button:hover {
+            transform: scale(1.05);
+            background: #0087d1;
+        }
+
+        /* SMALL NOTE */
+
+        .student-note {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:900px) {
+
+            nav {
+                padding: 18px 20px;
+            }
+
+            .hero {
+                padding: 150px 30px 80px;
+            }
+
+            .hero-text h1 {
+                font-size: 42px;
+            }
+
+            section {
+                padding: 70px 25px;
+            }
+
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 12px;
+                font-size: 14px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav>
+        <div class="logo">Air<span>Guard</span></div>
+
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#research">Research</a></li>
+            <li><a href="#facts">Facts</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="survey.html">Survey</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+
+    <section class="hero" id="home">
+
+        <div class="hero-text">
+
+            <h1>Indoor Air Quality Matters</h1>
+
+            <p>
+                My PYP Exhibition is about indoor air quality and how it affects
+                people every day. Many people stay indoors for a long time,
+                so clean air is important for health, focus, sleep, and learning.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#research" class="btn primary">Explore Research</a>
+                <a href="survey.html" class="btn secondary">Take Air Scan</a>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- WHY IMPORTANT -->
+
+    <section>
+
+        <div class="section-title">
+            <h2>Why Indoor Air Quality Is Important</h2>
+
+            <p>
+                Bad indoor air can make people feel tired or sick.
+                It can also affect students in classrooms and people at work.
+            </p>
+        </div>
+
+        <div class="card-container">
+
+            <div class="card">
+                <h3>Respiratory Health</h3>
+
+                <p>
+                    Polluted indoor air can cause coughing, asthma,
+                    allergies, and breathing problems.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Brain Performance</h3>
+
+                <p>
+                    High carbon dioxide levels may reduce concentration,
+                    memory, and focus in school or offices.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Daily Exposure</h3>
+
+                <p>
+                    People spend many hours indoors at home, school,
+                    malls, and workplaces every day.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Environmental Awareness</h3>
+
+                <p>
+                    Learning about indoor air quality can help people
+                    build healthier habits and cleaner spaces.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- RESEARCH -->
+
+    <section class="research" id="research">
+
+        <div class="section-title">
+            <h2>Research Information</h2>
+
+            <p>
+                These are some important things I learned while researching
+                indoor air pollution and healthy buildings.
+            </p>
+        </div>
+
+        <div class="research-grid">
+
+            <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop">
+
+            <div class="research-text">
+
+                <h3>Main Sources of Indoor Pollution</h3>
+
+                <p>
+                    Indoor pollution can come from smoke, dust, mold,
+                    cleaning products, cooking gases, pets, and poor ventilation.
+                </p>
+
+                <p>
+                    Sometimes indoor air can actually be more polluted
+                    than outdoor air because pollutants stay trapped inside buildings.
+                </p>
+
+                <ul class="research-list">
+                    <li>✔ Poor ventilation increases carbon dioxide levels.</li>
+                    <li>✔ Mold grows faster in humid places.</li>
+                    <li>✔ Dust can trigger allergies.</li>
+                    <li>✔ Smoke damages lung health.</li>
+                    <li>✔ Air purifiers may help improve air quality.</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FACTS -->
+
+    <section class="facts" id="facts">
+
+        <div class="section-title">
+
+            <h2 style="color:white;">Air Quality Facts</h2>
+
+            <p style="color:#cbd5e1;">
+                Important facts I found during my research.
+            </p>
+
+        </div>
+
+        <div class="facts-grid">
+
+            <div class="fact-box">
+                <h1>90%</h1>
+                <p>Many people spend most of their time indoors.</p>
+            </div>
+
+            <div class="fact-box">
+                <h1>2x</h1>
+                <p>Indoor air may sometimes be more polluted than outside air.</p>
+            </div>
+
+            <div class="fact-box">
+                <h1>CO₂</h1>
+                <p>High levels can reduce concentration and focus.</p>
+            </div>
+
+            <div class="fact-box">
+                <h1>Fresh Air</h1>
+                <p>Ventilation can improve indoor air quality.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- GALLERY -->
+
+    <section id="gallery">
+
+        <div class="section-title">
+
+            <h2>Indoor Air Environments</h2>
+
+            <p>
+                Examples of places where indoor air quality is important.
+            </p>
+
+        </div>
+
+        <div class="gallery-grid">
+
+            <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=1200&auto=format&fit=crop">
+
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop">
+
+            <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1200&auto=format&fit=crop">
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <h2>Ready To Check Your Air Quality?</h2>
+
+        <p>
+            Click the button below to start the Indoor Air Quality Survey.
+            The survey will estimate if the air quality is good,
+            moderate, or poor based on your answers.
+        </p>
+
+        <button class="scan-button" onclick="window.location.href='survey.html'">
+            Start Scanning
+        </button>
+
+        <p class="student-note">
+            Created for PYP Exhibition Project
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
