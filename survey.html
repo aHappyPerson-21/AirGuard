@@ -3,569 +3,622 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Scientific Indoor Air Quality Analyzer</title>
-
+<title>Indoor Air Quality Analyzer</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
-
-body{
-    background:linear-gradient(135deg,#e0f2ff,#f8fbff);
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:30px;
+body {
+    background: linear-gradient(135deg, #e0f2ff, #f8fbff);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
 }
-
-.container{
-    width:100%;
-    max-width:950px;
-    background:white;
-    border-radius:22px;
-    padding:40px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.12);
+.container {
+    width: 100%;
+    max-width: 900px;
+    background: white;
+    border-radius: 22px;
+    padding: 44px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
 }
-
-h1{
-    text-align:center;
-    margin-bottom:10px;
-    color:#0f172a;
+h1 {
+    text-align: center;
+    margin-bottom: 8px;
+    color: #0f172a;
+    font-size: 26px;
+    font-weight: 600;
 }
-
-.subtitle{
-    text-align:center;
-    color:#64748b;
-    margin-bottom:35px;
+.subtitle {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 36px;
+    font-size: 14px;
+    line-height: 1.6;
 }
-
-.question{
-    margin-bottom:20px;
+.section-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    margin: 28px 0 14px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 8px;
 }
-
-label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:500;
+.question {
+    margin-bottom: 20px;
 }
-
-input,select{
-    width:100%;
-    padding:13px;
-    border-radius:12px;
-    border:1px solid #cbd5e1;
-    font-size:15px;
-    outline:none;
+label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 500;
+    font-size: 15px;
+    color: #0f172a;
 }
-
-input:focus,select:focus{
-    border-color:#0ea5e9;
+.label-hint {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 400;
+    margin-bottom: 8px;
+    display: block;
 }
-
-button{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:14px;
-    background:#0ea5e9;
-    color:white;
-    font-size:17px;
-    font-weight:600;
-    cursor:pointer;
-    margin-top:10px;
+select {
+    width: 100%;
+    padding: 13px;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    font-size: 15px;
+    outline: none;
+    background: white;
+    color: #0f172a;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
 }
-
-button:hover{
-    background:#0284c7;
+select:focus { border-color: #0ea5e9; }
+ 
+/* stepper for number inputs */
+.stepper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
 }
-
-.result{
-    margin-top:30px;
-    padding:30px;
-    border-radius:18px;
-    display:none;
+.step-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid #cbd5e1;
+    background: white;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0;
+    transition: background .15s;
 }
-
-.good{
-    background:#dcfce7;
-    color:#166534;
+.step-btn:hover { background: #f1f5f9; }
+.step-val {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0f172a;
+    min-width: 40px;
+    text-align: center;
 }
-
-.moderate{
-    background:#fef9c3;
-    color:#854d0e;
+.step-unit {
+    font-size: 14px;
+    color: #64748b;
 }
-
-.bad{
-    background:#fee2e2;
-    color:#991b1b;
+.analyze-btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    background: #0ea5e9;
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 18px;
+    transition: background .15s;
 }
-
-.verybad{
-    background:#7f1d1d;
-    color:white;
+.analyze-btn:hover { background: #0284c7; }
+ 
+/* ---- results ---- */
+.result {
+    margin-top: 32px;
+    padding: 30px;
+    border-radius: 18px;
+    display: none;
 }
-
-.metrics{
-    margin-top:20px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:15px;
+.result.good    { background: #dcfce7; color: #166534; }
+.result.moderate{ background: #fef9c3; color: #854d0e; }
+.result.bad     { background: #fee2e2; color: #991b1b; }
+.result.verybad { background: #7f1d1d; color: white; }
+ 
+.result h2 { font-size: 20px; margin-bottom: 10px; }
+.result .summary { font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
+ 
+/* score bar */
+.score-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
 }
-
-.metric{
-    background:rgba(255,255,255,0.6);
-    padding:15px;
-    border-radius:12px;
+.score-circle {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.45);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
-
-.metric h3{
-    font-size:14px;
-    margin-bottom:5px;
+.score-num  { font-size: 26px; font-weight: 600; line-height: 1; }
+.score-lbl  { font-size: 10px; opacity: .7; }
+ 
+/* metric cards */
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
 }
-
-.metric p{
-    font-size:20px;
-    font-weight:600;
+.metric {
+    background: rgba(255,255,255,0.5);
+    padding: 14px 16px;
+    border-radius: 12px;
 }
-
-ul{
-    margin-top:12px;
-    padding-left:20px;
-    line-height:1.8;
-}
-
+.metric h3 { font-size: 11px; font-weight: 500; opacity: .75; margin-bottom: 4px; }
+.metric p  { font-size: 20px; font-weight: 600; line-height: 1.2; }
+.metric small { font-size: 11px; opacity: .65; }
+ 
+/* sub-score bars */
+.bars { margin-bottom: 20px; }
+.bar-row { margin-bottom: 10px; }
+.bar-meta { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px; opacity: .8; }
+.bar-bg   { background: rgba(0,0,0,.12); border-radius: 4px; height: 8px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width .5s ease; }
+ 
+.tips-title { font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+ul.tips { padding-left: 20px; }
+ul.tips li { font-size: 13px; line-height: 1.85; }
 </style>
 </head>
-
 <body>
-
+ 
 <div class="container">
-
-<h1>Scientific Indoor Air Quality Analyzer</h1>
-
-<p class="subtitle">
-Realistic estimation using occupancy density, CO₂ buildup,
-ventilation rate (ACH), humidity, pollutants, and filtration.
-</p>
-
-<div class="question">
-<label>People in room</label>
-<input type="number" id="people" min="1">
-</div>
-
-<div class="question">
-<label>Room area (m²)</label>
-<input type="number" id="area" min="1">
-</div>
-
-<div class="question">
-<label>Ceiling height (m)</label>
-<input type="number" id="height" value="2.7" step="0.1">
-</div>
-
-<div class="question">
-<label>Hours occupied daily</label>
-<input type="number" id="hours" min="1">
-</div>
-
-<div class="question">
-<label>Window ventilation</label>
-<select id="windows">
-<option value="6">Often (strong airflow)</option>
-<option value="3">Sometimes</option>
-<option value="1">Rarely</option>
-<option value="0.3">Never / sealed room</option>
-</select>
-</div>
-
-<div class="question">
-<label>Mechanical HVAC ventilation</label>
-<select id="hvac">
-<option value="3">Good HVAC ventilation</option>
-<option value="1.5">Weak HVAC</option>
-<option value="0">None</option>
-</select>
-</div>
-
-<div class="question">
-<label>Indoor smoking</label>
-<select id="smoke">
-<option value="0">No</option>
-<option value="1">Yes</option>
-</select>
-</div>
-
-<div class="question">
-<label>Dust level</label>
-<select id="dust">
-<option value="0">Low</option>
-<option value="1">Moderate</option>
-<option value="2">High</option>
-</select>
-</div>
-
-<div class="question">
-<label>Air purifier</label>
-<select id="purifier">
-<option value="1">Yes (HEPA / active filtration)</option>
-<option value="0">No</option>
-</select>
-</div>
-
-<div class="question">
-<label>Humidity (%)</label>
-<input type="number" id="humidity" min="10" max="100">
-</div>
-
-<div class="question">
-<label>Mold / moisture issue</label>
-<select id="mold">
-<option value="0">No</option>
-<option value="1">Yes</option>
-</select>
-</div>
-
-<button onclick="analyzeAir()">
-Analyze Indoor Air Quality
-</button>
-
-<div id="result" class="result">
-
-<h2 id="title"></h2>
-
-<p id="summary"></p>
-
-<div class="metrics">
-
-<div class="metric">
-<h3>Estimated CO₂</h3>
-<p id="co2"></p>
-</div>
-
-<div class="metric">
-<h3>Ventilation Rate</h3>
-<p id="ach"></p>
-</div>
-
-<div class="metric">
-<h3>Occupancy Density</h3>
-<p id="density"></p>
-</div>
-
-<div class="metric">
-<h3>PM / Pollutant Risk</h3>
-<p id="pmrisk"></p>
-</div>
-
-</div>
-
-<div style="margin-top:25px;">
-<strong>Improvement Actions:</strong>
-<ul id="tips"></ul>
-</div>
-
-</div>
-
-</div>
-
+ 
+  <h1>Indoor Air Quality Analyzer</h1>
+  <p class="subtitle">
+    Uses real ventilation science — steady-state CO₂ mass balance,
+    WHO &amp; EPA PM2.5 thresholds, and ASHRAE ventilation standards.
+  </p>
+ 
+  <!-- ROOM -->
+  <div class="section-title">Your room</div>
+ 
+  <div class="question">
+    <label>How many people are usually in the room?</label>
+    <div class="stepper">
+      <button class="step-btn" onclick="adj('people',-1)">−</button>
+      <div class="step-val" id="people-v">1</div>
+      <button class="step-btn" onclick="adj('people',1)">+</button>
+      <span class="step-unit">people</span>
+    </div>
+  </div>
+ 
+  <div class="question">
+    <label>How big is the room?</label>
+    <select id="area">
+      <option value="9">Tiny room / bathroom  (~9 m²)</option>
+      <option value="15">Small bedroom  (~15 m²)</option>
+      <option value="20" selected>Average bedroom  (~20 m²)</option>
+      <option value="30">Large bedroom / small living room  (~30 m²)</option>
+      <option value="45">Living room / dining room  (~45 m²)</option>
+      <option value="70">Large open room  (~70 m²)</option>
+      <option value="120">Open-plan office / classroom  (~120 m²)</option>
+    </select>
+  </div>
+ 
+  <div class="question">
+    <label>How high is the ceiling?</label>
+    <select id="height">
+      <option value="2.2">Low ceiling  (~2.2 m)</option>
+      <option value="2.7" selected>Normal ceiling  (~2.7 m)</option>
+      <option value="3.2">Tall ceiling  (~3.2 m)</option>
+      <option value="4.0">Very high ceiling  (~4 m)</option>
+    </select>
+  </div>
+ 
+  <div class="question">
+    <label>How many hours a day do people spend in this room?</label>
+    <div class="stepper">
+      <button class="step-btn" onclick="adj('hours',-1)">−</button>
+      <div class="step-val" id="hours-v">4</div>
+      <button class="step-btn" onclick="adj('hours',1)">+</button>
+      <span class="step-unit">hours / day</span>
+    </div>
+  </div>
+ 
+  <div class="question">
+    <label>What are people doing in the room?</label>
+    <span class="label-hint">This affects how much CO₂ people breathe out per hour</span>
+    <select id="activity">
+      <option value="1.0">Sleeping or resting</option>
+      <option value="1.4" selected>Sitting — reading, working, watching TV</option>
+      <option value="2.0">Standing, talking, teaching</option>
+      <option value="3.5">Light exercise — yoga, stretching</option>
+      <option value="6.0">Vigorous exercise — gym, sport</option>
+    </select>
+  </div>
+ 
+  <!-- VENTILATION -->
+  <div class="section-title">Ventilation &amp; filtration</div>
+ 
+  <div class="question">
+    <label>Are windows opened?</label>
+    <select id="windows">
+      <option value="4.0">Yes — wide open, strong airflow</option>
+      <option value="1.5" selected>Sometimes / slightly opened</option>
+      <option value="0.4">Rarely</option>
+      <option value="0.1">Never — windows sealed or always closed</option>
+    </select>
+  </div>
+ 
+  <div class="question">
+    <label>Is there a ventilation or air-conditioning system (HVAC)?</label>
+    <select id="hvac">
+      <option value="4.0">Yes — well-maintained, good airflow</option>
+      <option value="1.5">Yes — basic or weak system</option>
+      <option value="0.0" selected>No — no mechanical ventilation</option>
+    </select>
+  </div>
+ 
+  <div class="question">
+    <label>Is there a HEPA air purifier in the room?</label>
+    <select id="purifier">
+      <option value="0" selected>No</option>
+      <option value="1">Yes</option>
+    </select>
+  </div>
+ 
+  <!-- POLLUTANTS -->
+  <div class="section-title">Pollutants &amp; moisture</div>
+ 
+  <div class="question">
+    <label>Does anyone smoke indoors?</label>
+    <select id="smoke">
+      <option value="0" selected>No</option>
+      <option value="1">Occasionally</option>
+      <option value="2">Yes, regularly</option>
+    </select>
+  </div>
+ 
+  <div class="question">
+    <label>How dusty is the room?</label>
+    <select id="dust">
+      <option value="0" selected>Clean — dusted or vacuumed regularly</option>
+      <option value="1">Some visible dust on surfaces</option>
+      <option value="2">Very dusty</option>
+    </select>
+  </div>
+ 
+  <div class="question">
+    <label>Any mold or damp patches?</label>
+    <select id="mold">
+      <option value="0" selected>No</option>
+      <option value="1">A little / minor patches</option>
+      <option value="2">Significant mold or damp</option>
+    </select>
+  </div>
+ 
+  <div class="question">
+    <label>What is the humidity like?</label>
+    <span class="label-hint">Healthy range is 30–60%. Too wet → mold. Too dry → irritated airways.</span>
+    <select id="humidity">
+      <option value="18">Very dry — air feels parched (&lt;25%)</option>
+      <option value="45" selected>Comfortable — feels normal (30–60%)</option>
+      <option value="68">Humid — feels slightly sticky (60–75%)</option>
+      <option value="82">Very humid — condensation on windows (&gt;75%)</option>
+    </select>
+  </div>
+ 
+  <div class="question">
+    <label>Any other pollution sources in this room?</label>
+    <span class="label-hint">Choose the one that applies most</span>
+    <select id="other">
+      <option value="none" selected>None of these</option>
+      <option value="cooking">Gas stove / cooking (without extractor fan)</option>
+      <option value="candles">Candles or incense burned regularly</option>
+      <option value="pets">Pets live indoors</option>
+      <option value="newstuff">New furniture, carpets, or fresh paint</option>
+    </select>
+  </div>
+ 
+  <button class="analyze-btn" onclick="analyzeAir()">Analyze My Air Quality</button>
+ 
+  <div id="result" class="result">
+ 
+    <div class="score-row">
+      <div class="score-circle">
+        <div class="score-num" id="r-score"></div>
+        <div class="score-lbl">/ 100</div>
+      </div>
+      <div>
+        <h2 id="r-title"></h2>
+        <p class="summary" id="r-summary"></p>
+      </div>
+    </div>
+ 
+    <div class="metrics" id="r-metrics"></div>
+ 
+    <div class="bars" id="r-bars"></div>
+ 
+    <div class="tips-title">What you can do:</div>
+    <ul class="tips" id="r-tips"></ul>
+ 
+  </div>
+ 
+</div><!-- /container -->
+ 
 <script>
-
-function analyzeAir(){
-
-    const people =
-        +document.getElementById("people").value || 1;
-
-    const area =
-        +document.getElementById("area").value || 20;
-
-    const height =
-        +document.getElementById("height").value || 2.7;
-
-    const hours =
-        +document.getElementById("hours").value || 1;
-
-    const windowACH =
-        +document.getElementById("windows").value;
-
-    const hvacACH =
-        +document.getElementById("hvac").value;
-
-    const smoke =
-        +document.getElementById("smoke").value;
-
-    const dust =
-        +document.getElementById("dust").value;
-
-    const purifier =
-        +document.getElementById("purifier").value;
-
-    const humidity =
-        +document.getElementById("humidity").value || 50;
-
-    const mold =
-        +document.getElementById("mold").value;
-
-    // -----------------------------
-    // ROOM PHYSICS
-    // -----------------------------
-
-    const roomVolume = area * height;
-
-    // Total ACH (air changes per hour)
-
-    let ach = windowACH + hvacACH;
-
-    // purifier adds some equivalent clean air delivery
-
-    if(purifier){
-        ach += 1.5;
-    }
-
-    ach = Math.max(0.3, ach);
-
-    // -----------------------------
-    // OCCUPANCY DENSITY
-    // persons per square meter
-    // -----------------------------
-
-    const occupancyDensity = people / area;
-
-    // -----------------------------
-    // ESTIMATED CO₂ MODEL
-    // Educational approximation
-    // -----------------------------
-
-    let estimatedCO2 =
-        420 +
-        ((people * hours * 18) / (roomVolume * ach)) * 1000;
-
-    // heavy overcrowding penalty
-
-    if(occupancyDensity > 0.5){
-        estimatedCO2 += 250;
-    }
-
-    if(occupancyDensity > 1){
-        estimatedCO2 += 500;
-    }
-
-    // -----------------------------
-    // PARTICLE / POLLUTION SCORE
-    // -----------------------------
-
-    let pollutionScore = 0;
-
-    // smoking massively increases PM2.5
-
-    if(smoke){
-        pollutionScore += 5;
-        estimatedCO2 += 600;
-    }
-
-    pollutionScore += dust * 1.5;
-
-    if(mold){
-        pollutionScore += 3;
-    }
-
-    // humidity outside healthy range
-
-    if(humidity > 60 || humidity < 30){
-        pollutionScore += 2;
-    }
-
-    // purifier mitigation
-
-    if(purifier){
-        pollutionScore -= 2;
-    }
-
-    pollutionScore = Math.max(0, pollutionScore);
-
-    // -----------------------------
-    // CLASSIFICATION
-    // -----------------------------
-
-    let category = "";
-    let summary = "";
-    let className = "";
-
-    // Combined evaluation
-
-    let finalRisk = 0;
-
-    // CO₂ contribution
-
-    if(estimatedCO2 < 800){
-        finalRisk += 0;
-    }
-    else if(estimatedCO2 < 1000){
-        finalRisk += 1;
-    }
-    else if(estimatedCO2 < 1400){
-        finalRisk += 2;
-    }
-    else if(estimatedCO2 < 2000){
-        finalRisk += 4;
-    }
-    else{
-        finalRisk += 6;
-    }
-
-    finalRisk += pollutionScore;
-
-    if(ach < 1){
-        finalRisk += 2;
-    }
-
-    // -----------------------------
-    // RESULT OUTPUT
-    // -----------------------------
-
-    if(finalRisk <= 2){
-
-        category = "🟢 Excellent Indoor Air Quality";
-        className = "result good";
-
-        summary =
-        "Ventilation and pollutant conditions appear healthy with low estimated contaminant accumulation.";
-
-    }
-    else if(finalRisk <= 5){
-
-        category = "🟡 Moderate Indoor Air Quality";
-        className = "result moderate";
-
-        summary =
-        "Some pollutant accumulation or reduced ventilation detected. Conditions are acceptable but could be improved.";
-
-    }
-    else if(finalRisk <= 8){
-
-        category = "🔴 Poor Indoor Air Quality";
-        className = "result bad";
-
-        summary =
-        "Elevated CO₂ buildup or pollutant exposure may reduce comfort, concentration, and respiratory quality.";
-
-    }
-    else{
-
-        category = "⚠️ Very Poor Indoor Air Quality";
-        className = "result verybad";
-
-        summary =
-        "High pollutant and ventilation risk detected. Long exposure may negatively affect health and cognitive performance.";
-
-    }
-
-    // -----------------------------
-    // DISPLAY
-    // -----------------------------
-
-    const result =
-        document.getElementById("result");
-
-    result.style.display = "block";
-    result.className = className;
-
-    document.getElementById("title").innerText =
-        category;
-
-    document.getElementById("summary").innerText =
-        summary;
-
-    document.getElementById("co2").innerText =
-        Math.round(estimatedCO2) + " ppm";
-
-    document.getElementById("ach").innerText =
-        ach.toFixed(1) + " ACH";
-
-    document.getElementById("density").innerText =
-        occupancyDensity.toFixed(2) + " ppl/m²";
-
-    // PM Risk label
-
-    let pmLabel = "Low";
-
-    if(pollutionScore >= 3){
-        pmLabel = "Moderate";
-    }
-
-    if(pollutionScore >= 6){
-        pmLabel = "High";
-    }
-
-    document.getElementById("pmrisk").innerText =
-        pmLabel;
-
-    // -----------------------------
-    // DYNAMIC RECOMMENDATIONS
-    // -----------------------------
-
-    const tips =
-        document.getElementById("tips");
-
-    tips.innerHTML = "";
-
-    function addTip(t){
-        const li = document.createElement("li");
-        li.innerText = t;
-        tips.appendChild(li);
-    }
-
-    if(estimatedCO2 > 1000){
-        addTip("Increase outdoor air ventilation to reduce CO₂ buildup.");
-    }
-
-    if(ach < 2){
-        addTip("Improve air exchange rate (ACH) using windows or HVAC.");
-    }
-
-    if(smoke){
-        addTip("Stop indoor smoking immediately.");
-    }
-
-    if(dust >= 1){
-        addTip("Reduce dust accumulation using HEPA vacuum cleaning.");
-    }
-
-    if(mold){
-        addTip("Address mold and moisture sources quickly.");
-    }
-
-    if(humidity > 60){
-        addTip("Reduce humidity below 60% to prevent microbial growth.");
-    }
-
-    if(humidity < 30){
-        addTip("Increase humidity to avoid dry air irritation.");
-    }
-
-    if(occupancyDensity > 0.5){
-        addTip("Reduce room overcrowding or increase room ventilation.");
-    }
-
-    if(!purifier && finalRisk >= 5){
-        addTip("Consider adding a HEPA air purifier.");
-    }
-
-    if(finalRisk <= 2){
-        addTip("Current indoor air conditions appear well controlled.");
-    }
-
+// ─── state ───────────────────────────────────────────────────────────────────
+const S = { people: 1, hours: 4 };
+ 
+function adj(key, d) {
+  const min = key === 'people' ? 1 : 1;
+  const max = key === 'people' ? 60 : 24;
+  S[key] = Math.max(min, Math.min(max, (S[key] || min) + d));
+  document.getElementById(key + '-v').textContent = S[key];
 }
-
+ 
+// ─── main ─────────────────────────────────────────────────────────────────────
+function analyzeAir() {
+ 
+  const people   = S.people;
+  const hours    = S.hours;
+  const area     = +document.getElementById('area').value;
+  const height   = +document.getElementById('height').value;
+  const activity = +document.getElementById('activity').value;  // MET multiplier
+  const windowACH= +document.getElementById('windows').value;
+  const hvacACH  = +document.getElementById('hvac').value;
+  const purifier = +document.getElementById('purifier').value;
+  const smoke    = +document.getElementById('smoke').value;
+  const dust     = +document.getElementById('dust').value;
+  const mold     = +document.getElementById('mold').value;
+  const humidity = +document.getElementById('humidity').value;
+  const other    = document.getElementById('other').value;
+ 
+  // ── ROOM VOLUME ────────────────────────────────────────────────────────────
+  const V = area * height; // m³
+ 
+  // ── CO₂ GENERATION ────────────────────────────────────────────────────────
+  // Research baseline: sedentary adult ~19 L/h CO₂; scaled by activity MET factor
+  const co2GenPerPerson = 19 * activity; // L/h per person
+  const co2Gen_m3h = (people * co2GenPerPerson) / 1000; // total m³/h
+ 
+  // ── EFFECTIVE ACH ─────────────────────────────────────────────────────────
+  // HEPA purifier CADR ~300 m³/h for PM (adds equivalent clean air delivery)
+  // Not a true ACH for CO₂ removal but improves PM significantly
+  let achBase  = windowACH + hvacACH;
+  let achPM    = achBase + (purifier ? Math.min(300 / V, 2.0) : 0);
+  let achCO2   = Math.max(0.1, achBase); // purifiers don't remove CO₂
+ 
+  // ── STEADY-STATE CO₂ (mass balance) ────────────────────────────────────────
+  // C_ss = C_outdoor + (G_total / (ACH × V)) × 1,000,000 ppm conversion
+  // G in m³/h, V in m³ → dimensionless ratio × 1e6 = ppm
+  let co2_ss = 420 + (co2Gen_m3h / (achCO2 * V)) * 1e6;
+ 
+  // Smoking adds CO₂ and combustion byproducts
+  if (smoke === 1) co2_ss += 200;
+  if (smoke === 2) co2_ss += 500;
+  co2_ss = Math.round(co2_ss);
+ 
+  // ── PM2.5 ESTIMATION (µg/m³) ──────────────────────────────────────────────
+  // Background infiltration from outdoors: ~5–8 µg/m³ typical urban
+  let pm25 = 6;
+ 
+  // Smoking: raises PM2.5 by ~10–22 µg/m³ (measured in real homes)
+  if (smoke === 1) pm25 += 12;
+  if (smoke === 2) pm25 += 25;
+ 
+  // Dust contributes PM
+  pm25 += dust * 7;
+ 
+  // Mold spores add particulates
+  pm25 += mold * 7;
+ 
+  // Other sources
+  if (other === 'cooking')  pm25 += 14; // gas cooking peaks ~50+ µg/m³ without extraction
+  if (other === 'candles')  pm25 += 6;
+  if (other === 'pets')     pm25 += 7;
+  if (other === 'newstuff') pm25 += 4;
+ 
+  // Ventilation dilutes particles (up to 60% reduction from open windows / HVAC)
+  const ventReduction = Math.min(0.60, achBase * 0.11);
+  pm25 *= (1 - ventReduction);
+ 
+  // HEPA purifier removes ~80% of remaining PM2.5
+  if (purifier) pm25 *= 0.20;
+ 
+  pm25 = Math.max(1, Math.round(pm25 * 10) / 10);
+ 
+  // ── VOC SCORE (0–10 qualitative) ──────────────────────────────────────────
+  let voc = 1.0;
+  if (other === 'newstuff') voc += 4.5;
+  if (other === 'candles')  voc += 2.0;
+  if (smoke >= 1)           voc += smoke * 2.0;
+  if (other === 'cooking')  voc += 1.5;
+  if (purifier)             voc *= 0.55;
+  voc = Math.min(10, Math.round(voc * 10) / 10);
+ 
+  // ── FRESH AIR PER PERSON ──────────────────────────────────────────────────
+  // ASHRAE 62.1 minimum: 8.5 L/s per person for office / residential
+  const ventPerPerson_m3h = (achCO2 * V) / people;
+  const ventPerPerson_Ls  = Math.round(ventPerPerson_m3h / 3.6 * 10) / 10;
+ 
+  // ── OCCUPANCY DENSITY ─────────────────────────────────────────────────────
+  const density = Math.round((people / area) * 100) / 100;
+ 
+  // ── SUB-SCORES (0–100, higher = better) ──────────────────────────────────
+ 
+  // CO₂: <800 excellent, 800–1000 good, 1000–1400 moderate, 1400–2000 poor, >2000 very poor
+  let co2Score;
+  if      (co2_ss < 800)  co2Score = 100;
+  else if (co2_ss < 1000) co2Score = 100 - ((co2_ss - 800)  / 200)  * 20;
+  else if (co2_ss < 1400) co2Score = 80  - ((co2_ss - 1000) / 400)  * 25;
+  else if (co2_ss < 2000) co2Score = 55  - ((co2_ss - 1400) / 600)  * 30;
+  else                    co2Score = Math.max(0, 25 - (co2_ss - 2000) / 100);
+ 
+  // PM2.5: WHO 2021 — annual 5 µg/m³, 24h 15 µg/m³; EPA indoor 35 µg/m³
+  let pmScore;
+  if      (pm25 < 5)  pmScore = 100;
+  else if (pm25 < 12) pmScore = 85 - ((pm25 - 5)  / 7)  * 20;
+  else if (pm25 < 25) pmScore = 65 - ((pm25 - 12) / 13) * 25;
+  else if (pm25 < 35) pmScore = 40 - ((pm25 - 25) / 10) * 20;
+  else                pmScore = Math.max(0, 20 - (pm25 - 35) * 0.5);
+ 
+  // Humidity: healthy 30–60%
+  const humOK = humidity >= 30 && humidity <= 60;
+  const humDev = humOK ? 0 : (humidity < 30 ? (30 - humidity) : (humidity - 60));
+  let humScore = Math.max(0, 100 - humDev * 3);
+ 
+  // VOC: 0 = score 100, 10 = score 0
+  let vocScore = Math.max(0, 100 - voc * 10);
+ 
+  // ── OVERALL (weighted) ────────────────────────────────────────────────────
+  co2Score = Math.round(co2Score);
+  pmScore  = Math.round(pmScore);
+  humScore = Math.round(humScore);
+  vocScore = Math.round(vocScore);
+  const overall = Math.round(co2Score * 0.40 + pmScore * 0.35 + humScore * 0.15 + vocScore * 0.10);
+ 
+  // ── CLASSIFY ──────────────────────────────────────────────────────────────
+  let cls, title, summary;
+  if (overall >= 80) {
+    cls = 'good';
+    title = '🟢 Good indoor air quality';
+    summary = 'The air in this room is well-ventilated and low in pollutants. Keep up the good habits!';
+  } else if (overall >= 60) {
+    cls = 'moderate';
+    title = '🟡 Moderate indoor air quality';
+    summary = 'Air quality is acceptable but has some issues. Small improvements will make a noticeable difference.';
+  } else if (overall >= 40) {
+    cls = 'bad';
+    title = '🔴 Poor indoor air quality';
+    summary = 'There are ventilation or pollution problems that may cause tiredness, headaches, or breathing discomfort over time.';
+  } else {
+    cls = 'verybad';
+    title = '⚠️ Very poor indoor air quality';
+    summary = 'Serious air quality concerns detected. Long exposure can harm health and significantly reduce concentration and wellbeing. Take action now.';
+  }
+ 
+  // ── DISPLAY ───────────────────────────────────────────────────────────────
+  const rbox = document.getElementById('result');
+  rbox.className = 'result ' + cls;
+  rbox.style.display = 'block';
+ 
+  document.getElementById('r-score').textContent   = overall;
+  document.getElementById('r-title').textContent   = title;
+  document.getElementById('r-summary').textContent = summary;
+ 
+  // Metrics
+  const co2tag  = co2_ss < 800 ? 'target &lt;800' : co2_ss < 1000 ? 'slightly elevated' : co2_ss < 1400 ? 'elevated' : 'high';
+  const pmtag   = pm25 < 5 ? 'WHO annual OK' : pm25 < 15 ? 'WHO 24h OK' : pm25 < 35 ? 'above WHO' : 'above EPA limit';
+  const venttag = ventPerPerson_Ls >= 8.5 ? 'ASHRAE OK' : 'below ASHRAE min (8.5)';
+ 
+  document.getElementById('r-metrics').innerHTML = `
+    <div class="metric">
+      <h3>Estimated CO₂</h3>
+      <p>${co2_ss.toLocaleString()} ppm</p>
+      <small>${co2tag}</small>
+    </div>
+    <div class="metric">
+      <h3>Estimated PM2.5</h3>
+      <p>${pm25} µg/m³</p>
+      <small>${pmtag}</small>
+    </div>
+    <div class="metric">
+      <h3>Fresh air per person</h3>
+      <p>${ventPerPerson_Ls} L/s</p>
+      <small>${venttag}</small>
+    </div>
+    <div class="metric">
+      <h3>Air changes / hour</h3>
+      <p>${achCO2.toFixed(1)} ACH</p>
+      <small>homes: 0.5–1.5 typical</small>
+    </div>
+    <div class="metric">
+      <h3>Occupancy density</h3>
+      <p>${density} ppl/m²</p>
+      <small>max comfort ~0.1</small>
+    </div>
+    <div class="metric">
+      <h3>VOC level</h3>
+      <p>${voc.toFixed(1)} / 10</p>
+      <small>qualitative estimate</small>
+    </div>
+  `;
+ 
+  // Sub-score bars
+  const barColor = s => s >= 70 ? '#22c55e' : s >= 45 ? '#eab308' : '#ef4444';
+  const bars = [
+    { label: 'CO₂ ventilation', score: co2Score },
+    { label: 'PM2.5 particles', score: pmScore  },
+    { label: 'Humidity',        score: humScore  },
+    { label: 'VOCs',            score: vocScore  },
+  ];
+  document.getElementById('r-bars').innerHTML = bars.map(b => `
+    <div class="bar-row">
+      <div class="bar-meta"><span>${b.label}</span><span>${b.score}/100</span></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:${b.score}%;background:${barColor(b.score)}"></div></div>
+    </div>
+  `).join('');
+ 
+  // Tips
+  const tips = [];
+  if (co2_ss > 800  && co2_ss <= 1000) tips.push('CO₂ is slightly above ideal. Opening a window for 10–15 minutes per hour will help.');
+  if (co2_ss > 1000 && co2_ss <= 1400) tips.push('CO₂ above 1,000 ppm causes drowsiness and poor focus. Improve ventilation — open windows or run HVAC.');
+  if (co2_ss > 1400) tips.push(`CO₂ is ${co2_ss} ppm — seriously elevated. This level noticeably harms cognitive performance. Ventilate urgently.`);
+  if (ventPerPerson_Ls < 8.5) tips.push(`Fresh air supply is only ${ventPerPerson_Ls} L/s per person. ASHRAE recommends at least 8.5 L/s — improve ventilation.`);
+  if (achCO2 < 0.5) tips.push('This room has very little air movement. Even cracking a window makes a big difference.');
+  if (pm25 > 15)  tips.push(`PM2.5 is ${pm25} µg/m³ — above the WHO 24-hour guideline (15 µg/m³). A HEPA air purifier would reduce this significantly.`);
+  if (pm25 > 35)  tips.push('PM2.5 exceeds the EPA indoor benchmark (35 µg/m³). This is a real health concern — act quickly.');
+  if (smoke === 1) tips.push('Occasional smoking raises PM2.5 by ~12 µg/m³. Try to smoke outdoors only.');
+  if (smoke === 2) tips.push('Regular indoor smoking is the single biggest avoidable air quality problem — it raises PM2.5 by ~25 µg/m³ and adds toxic VOCs.');
+  if (mold >= 1)  tips.push('Mold releases spores and VOCs into the air. Fix any leaks or damp, improve ventilation, and consider a dehumidifier.');
+  if (humidity > 60) tips.push(`Humidity is ${humidity}% — above the healthy ceiling of 60%. Use a dehumidifier to prevent mold and dust mites.`);
+  if (humidity < 30) tips.push(`Humidity is ${humidity}% — too dry. Below 30% irritates airways, eyes, and skin. A humidifier will help.`);
+  if (other === 'cooking') tips.push('Gas cooking without extraction can spike PM2.5 to over 50 µg/m³. Always use an extractor fan or open a window while cooking.');
+  if (other === 'candles') tips.push('Candles and incense release PM2.5 and VOCs. Burn them sparingly and keep the room ventilated.');
+  if (other === 'newstuff') tips.push('New furniture and paint off-gas VOCs for weeks. Air the room thoroughly and keep windows open where possible.');
+  if (!purifier && overall < 60) tips.push('A HEPA air purifier would meaningfully reduce PM2.5 and some VOCs in this room.');
+  if (density > 0.15) tips.push(`Occupancy density is ${density} people/m² — consider increasing ventilation to match.`);
+  if (overall >= 80)  tips.push('Air quality is good. Keep up the ventilation habits and check humidity seasonally.');
+ 
+  const tipEl = document.getElementById('r-tips');
+  tipEl.innerHTML = tips.map(t => `<li>${t}</li>`).join('');
+ 
+  rbox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 </script>
-
 </body>
 </html>
