@@ -253,51 +253,6 @@
 
         .student-note { margin-top: 25px; font-size: 14px; color: #94a3b8; }
 
-        /* VISITOR COUNTER */
-        .visitor-counter {
-            margin-top: 50px;
-            padding-top: 40px;
-            border-top: 1px solid #1e293b;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .visitor-counter p {
-            font-size: 13px;
-            color: #64748b;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        .counter-display {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .counter-digit {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 10px;
-            width: 44px;
-            height: 58px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: #00a6ff;
-            box-shadow: 0 2px 8px rgba(0, 166, 255, 0.15);
-            transition: transform 0.3s ease;
-        }
-
-        .counter-digit.pop { transform: scale(1.15); }
-
-        .counter-sep { color: #334155; font-size: 22px; margin: 0 2px; }
-        .counter-label { font-size: 13px; color: #64748b; }
-
         /* RESPONSIVE */
         @media(max-width:900px) {
             nav { padding: 18px 20px; }
@@ -428,13 +383,6 @@
             Start Scanning
         </button>
         <p class="student-note">Created for PYP Exhibition Project</p>
-
-        <!-- VISITOR COUNTER -->
-        <div class="visitor-counter">
-            <p>👁 Total Visitors</p>
-            <div class="counter-display" id="counterDisplay"></div>
-            <span class="counter-label">Thank you for visiting!</span>
-        </div>
     </footer>
 
     <script type="text/javascript">
@@ -443,81 +391,6 @@
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "wsvc7nbqu3");
-    </script>
-    
-    <script>
-        (function () {
-            const BIN_ID  = '6a09da8cc0954111d838c356';
-            const API_KEY = '$2a$10$qxr0JyE9W4..4KUhhjce5OPjyLelGgZDi4y/2Ezm4EeDVEZJVcOvG';
-
-            const BASE    = 'https://api.jsonbin.io/v3/b/' + BIN_ID;
-            const HEADERS = {
-                'Content-Type' : 'application/json',
-                'X-Master-Key' : API_KEY
-            };
-
-            function renderCounter(n) {
-                const display = document.getElementById('counterDisplay');
-                const str = String(n).padStart(6, '0');
-                display.innerHTML = '';
-                str.split('').forEach(function (digit, i) {
-                    if (i === 3) {
-                        const sep = document.createElement('span');
-                        sep.className = 'counter-sep';
-                        sep.textContent = ',';
-                        display.appendChild(sep);
-                    }
-                    const box = document.createElement('div');
-                    box.className = 'counter-digit';
-                    box.textContent = digit;
-                    display.appendChild(box);
-                });
-            }
-
-            function animateCount(target) {
-                const steps    = Math.min(target, 60);
-                const stepTime = 900 / Math.max(steps, 1);
-                let current    = Math.max(0, target - steps);
-                renderCounter(current);
-                const timer = setInterval(function () {
-                    current += 1;
-                    renderCounter(current);
-                    if (current >= target) {
-                        clearInterval(timer);
-                        document.querySelectorAll('.counter-digit').forEach(function (el, i) {
-                            setTimeout(function () {
-                                el.classList.add('pop');
-                                setTimeout(function () { el.classList.remove('pop'); }, 300);
-                            }, i * 60);
-                        });
-                    }
-                }, stepTime);
-            }
-
-            async function initCounter() {
-                try {
-                    const res  = await fetch(BASE + '/latest', { headers: HEADERS });
-                    const data = await res.json();
-                    let count  = data.record.count || 0;
-
-                    if (!sessionStorage.getItem('airguard_counted')) {
-                        count += 1;
-                        await fetch(BASE, {
-                            method  : 'PUT',
-                            headers : HEADERS,
-                            body    : JSON.stringify({ count: count })
-                        });
-                        sessionStorage.setItem('airguard_counted', '1');
-                    }
-
-                    animateCount(count);
-                } catch (e) {
-                    animateCount(0);
-                }
-            }
-
-            initCounter();
-        })();
     </script>
 
 </body>
