@@ -346,12 +346,12 @@
     <nav>
         <div class="logo">Air<span>Guard</span></div>
         <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#research">Research</a></li>
-            <li><a href="#facts">Facts</a></li>
-            <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#feedback">Feedback</a></li>
-            <li><a href="#survey">Survey</a></li>
+            <li><a href="#" data-target="home">Home</a></li>
+            <li><a href="#" data-target="research">Research</a></li>
+            <li><a href="#" data-target="facts">Facts</a></li>
+            <li><a href="#" data-target="gallery">Gallery</a></li>
+            <li><a href="#" data-target="feedback">Feedback</a></li>
+            <li><a href="#" data-target="survey">Survey</a></li>
         </ul>
     </nav>
 
@@ -548,6 +548,17 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-N1PM6KV3ZP');
+    </script>
+
+    <!-- NAVBAR -->
+    <script>
+      document.querySelectorAll('.nav-links a[data-target]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = document.getElementById(this.dataset.target);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
     </script>
 
 </body>
