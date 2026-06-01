@@ -218,12 +218,12 @@
         }
 
         .gallery-grid img:hover { transform: scale(1.03); }
-        
+
         /* FEEDBACK */
         .feedback {
             background: #ffffff;
         }
-        
+
         .feedback-form {
             max-width: 800px;
             margin: auto;
@@ -232,13 +232,13 @@
             border-radius: 20px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.08);
         }
-        
+
         .feedback-form form {
             display: flex;
             flex-direction: column;
             gap: 18px;
         }
-        
+
         .feedback-form input,
         .feedback-form textarea {
             width: 100%;
@@ -249,13 +249,13 @@
             font-size: 15px;
             resize: vertical;
         }
-        
+
         .feedback-form input:focus,
         .feedback-form textarea:focus {
             outline: none;
             border-color: #00a6ff;
         }
-        
+
         .feedback-btn {
             padding: 16px;
             border: none;
@@ -267,12 +267,33 @@
             cursor: pointer;
             transition: 0.3s;
         }
-        
+
         .feedback-btn:hover {
             background: #0087d1;
         }
-        
-        
+
+        /* Form result message */
+        #form-result {
+            display: none;
+            text-align: center;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        #form-result.success {
+            background: #d1fae5;
+            color: #065f46;
+            display: block;
+        }
+
+        #form-result.error {
+            background: #fee2e2;
+            color: #991b1b;
+            display: block;
+        }
+
         /* FOOTER */
         footer {
             background: #0f172a;
@@ -429,41 +450,29 @@
     <!-- FEEDBACK -->
     <section class="feedback" id="feedback">
         <div class="section-title">
-            <h2>Feedback</h2>
-            <p>
-                Share your thoughts about this Indoor Air Quality project.
-                Your feedback helps improve the exhibition.
-            </p>
+            <h2>Leave Feedback</h2>
+            <p>Have thoughts on this project? I'd love to hear what you think!</p>
         </div>
-    
         <div class="feedback-form">
-            <form>
-                <input
-                    type="text"
-                    placeholder="Your Name"
-                    required>
-    
-                <input
-                    type="text"
-                    placeholder="Email Address or Phone Number"
-                    required>
-    
-                <textarea
-                    rows="6"
-                    placeholder="Write your feedback here..."
-                    required></textarea>
-    
-                <button
-                    type="submit"
-                    class="feedback-btn">
-                    Send Feedback
-                </button>
+            <form id="feedback-form">
+                <!-- Web3Forms access key — replace with your own from web3forms.com -->
+                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                <!-- Optional: custom subject line in your inbox -->
+                <input type="hidden" name="subject" value="AirGuard PYP Exhibition — New Feedback">
+                <!-- Honeypot spam protection -->
+                <input type="checkbox" name="botcheck" style="display:none;">
+
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="5" placeholder="Your feedback..." required></textarea>
+                <button type="submit" class="feedback-btn">Send Feedback</button>
+                <div id="form-result"></div>
             </form>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="survey" id="survey">
+    <footer id="survey">
         <h2>Ready To Check Your Air Quality?</h2>
         <p>
             Click the button below to start the Indoor Air Quality Survey.
@@ -475,6 +484,57 @@
         </button>
         <p class="student-note">Created for PYP Exhibition Project</p>
     </footer>
+
+    <script>
+        const form = document.getElementById('feedback-form');
+        const result = document.getElementById('form-result');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const btn = form.querySelector('.feedback-btn');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+            result.className = '';
+            result.style.display = 'none';
+
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: json
+            })
+            .then(async (response) => {
+                const data = await response.json();
+                if (response.status === 200) {
+                    result.textContent = '✅ Thanks for your feedback!';
+                    result.className = 'success';
+                    form.reset();
+                } else {
+                    result.textContent = data.message || '❌ Something went wrong. Please try again.';
+                    result.className = 'error';
+                }
+            })
+            .catch(() => {
+                result.textContent = '❌ Network error. Please check your connection.';
+                result.className = 'error';
+            })
+            .finally(() => {
+                btn.textContent = 'Send Feedback';
+                btn.disabled = false;
+                setTimeout(() => {
+                    result.className = '';
+                    result.style.display = 'none';
+                }, 5000);
+            });
+        });
+    </script>
 
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
@@ -490,9 +550,8 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
       gtag('config', 'G-N1PM6KV3ZP');
     </script>
-    
+
 </body>
 </html>
